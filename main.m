@@ -28,11 +28,11 @@ codes = bd2Fdesc(mask,keep_details); % len(codes) must be an Even#
 Fcode = codes(1:end-1,:); % here len(Fcode) must be an Odd#
 
 % changing the FDs
-% Core func: FD_change(input-Fcode,low-freq,high-freq)
+% Core func: FD_change(input-Fcode,low-freq,high-freq,sigma)
 % high-freq>=low-freq 
 % if low-freq=0: include DC term
 % if low-freq>0: keep no change on DC term
-Fcode = FD_change(Fcode,2,10);
+Fcode = FD_change(Fcode,2,10,1);
 Fcode = [Fcode; codes(end,:)];% len(codes) must be an Even#
 
 % new changed img

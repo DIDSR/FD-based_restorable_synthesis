@@ -1,4 +1,4 @@
-function out = FD_change(Fcode,l,h)
+function out = FD_change(Fcode,l,h,sigma)
 Len = size(Fcode,1);% Len must be an Odd#
 n=(Len-1)/2;
 % idx: 1,2,3,…,n,n+1, Len-n+1, Len-n+2,…,Len
@@ -17,7 +17,7 @@ n=(Len-1)/2;
     s_i = [(n-h):(n-l),(n+l):(n+h)];
     idx = s_i + 1;
 
-    sigma= 1;
+%     sigma= 1;
     
     for i=1:length(idx)
         Fcode(idx(i),1)=Fcode(idx(i),1)*(1+normrnd(0,sigma));
