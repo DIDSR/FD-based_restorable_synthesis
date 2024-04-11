@@ -14,33 +14,23 @@ else
     mask = img;
 end
 
-% count # of pixels on the boundary
-bd = bwperim(mask);
-total_pixels = sum(bd(:));
-if mod(total_pixels,2) % odd
-    total_pixels = total_pixels-1;
-end
-max_detail = total_pixels/2;
-keep_details = floor(max_detail);
 
 % coding boundary to FDs
-codes = bd2Fdesc(mask,keep_details); % len(codes) must be an Even#
-Fcode = codes(1:end-1,:); % here len(Fcode) must be an Odd#
+Fcode = bd2Fdesc(mask); 
 
 % changing the FDs
 % Core func: FD_change(input-Fcode,low-freq,high-freq,sigma)
 % high-freq>=low-freq 
 % if low-freq=0: include DC term
 % if low-freq>0: keep no change on DC term
-Fcode = FD_change(Fcode,2,10,1);
-Fcode = [Fcode; codes(end,:)];% len(codes) must be an Even#
+CFcode = FD_change(Fcode,2,10,1);
 
 % new changed img
 [im_height, im_width]=size(mask);
 syn_img=zeros(im_height,im_width,'logical');
 
 % convert FDs to boundary
-re_img = Fdesc2bd(Fcode,size(mask));
+re_img = Fdesc2bd(CFcode,size(mask));
 se = strel('square',2);
 CH = imdilate(re_img,se);
 syn_img = imfill(CH,'holes');
